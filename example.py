@@ -13,7 +13,7 @@ def main():
     gen.start(400)
 
     rev = Delay(sample_rate)
-    rev.set_width(0.5)
+    rev.set_size(0.5)
     rev.set_decay(0.5)
     rev.start()
 
@@ -23,7 +23,7 @@ def main():
     adsr.set_sustain(0.7)
     adsr.set_release(0.2)
     adsr.start()
-    
+
     samples = []
 
     while (not adsr.finished()):
