@@ -3,21 +3,23 @@
 from homu.generators import KarplusStrong
 from homu.envelopes import ADSR
 from homu.effects import Delay
+import homu.samplerate
 import numpy as np
 import scipy.io.wavfile as wavfile
 
 
 def main():
     sample_rate = 44100
-    gen = KarplusStrong(sample_rate)
+    homu.samplerate.Set(sample_rate)
+    gen = KarplusStrong()
     gen.start(400)
 
-    rev = Delay(sample_rate)
+    rev = Delay()
     rev.set_size(0.5)
     rev.set_decay(0.5)
     rev.start()
 
-    adsr = ADSR(sample_rate)
+    adsr = ADSR()
     adsr.set_attack(0.01)
     adsr.set_decay(0.2)
     adsr.set_sustain(0.7)
@@ -27,7 +29,7 @@ def main():
     samples = []
 
     while (not adsr.finished()):
-        if (adsr.seconds_played() >= 4):
+        if (adsr.seconds_played() >= 40):
             adsr.stop_sustain()
 
         s = rev.next_sample(gen.next_sample()) * adsr.next_sample()

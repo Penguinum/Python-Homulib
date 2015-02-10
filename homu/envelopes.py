@@ -1,7 +1,6 @@
 from ctypes import *
 from homu import homulib
 
-homulib.ADSR_Create.argtypes        = [c_size_t]
 homulib.ADSR_Create.restype         = c_void_p
 homulib.ADSR_Destroy.argtypes       = [c_void_p]
 homulib.ADSR_Start.argtypes         = [c_void_p]
@@ -18,8 +17,8 @@ homulib.ADSR_Finished.restype       = c_int
 homulib.ADSR_StopSustain.argtypes   = [c_void_p]
 
 class ADSR:
-    def __init__(self, sample_rate):
-        self.adsr = homulib.ADSR_Create(sample_rate)
+    def __init__(self):
+        self.adsr = homulib.ADSR_Create()
     
     def __del__(self):
         homulib.ADSR_Destroy(self.adsr)
